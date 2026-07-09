@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>9Router Tools — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="glow-bg"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <span class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
+      </span>
+      <div class="logo-text">
+        <h1>9Router Tools</h1>
+        <span>Config Management</span>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 15px;">
+      <div class="server-status" id="serverStatus">
+        <span class="status-dot"></span>
+        <span class="status-text">Đang kiểm tra kết nối...</span>
+      </div>
+      <button class="btn-settings" id="btnOpenSettings" title="Cấu hình hệ thống">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- App Layout: Sidebar + Main + Side Panel -->
+  <div class="app-layout no-panel" id="appLayout">
+    <!-- ═══ SIDEBAR ═══ -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h3>Profiles</h3>
+        <div style="display: flex; gap: 8px; width: 100%;">
+          <button class="btn-create" id="btnCreateProfile" style="flex: 1;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Tạo mới
+          </button>
+          <button class="btn-create" id="btnImportProfileBundle" style="flex: 1; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            Nhập Gói
+          </button>
+          <input type="file" id="importBundleFileInput" accept=".9rtbundle" style="display: none;">
+        </div>
+      </div>
+      <div class="profile-list" id="profileList">
+        <!-- Profile cards rendered by JS -->
+      </div>
+      <div class="sidebar-empty" id="sidebarEmpty">
+        <p>Chưa có profile nào</p>
+      </div>
+    </aside>
+
+    <!-- ═══ MAIN WORKSPACE ═══ -->
+    <main>
+      <!-- Profile Info Bar -->
+      <div class="profile-bar hidden" id="profileBar">
+        <div class="profile-bar-info">
+          <span class="profile-bar-name" id="profileBarName">—</span>
+          <span class="profile-bar-path" id="profileBarPath">—</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <button class="btn-icon-panel" id="btnCopyProfilePath" title="Sao chép đường dẫn file cấu hình">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            <span>Copy Path</span>
+          </button>
+          <button class="btn-icon-panel" id="btnExportProfileData" title="Xuất dữ liệu cấu hình hiện tại (JSON/CSV)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span>Export Data</span>
+          </button>
+          <button class="btn-icon-panel" id="btnCheckHealth" title="Kiểm tra trạng thái file cấu hình">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            </svg>
+            <span>Check Health</span>
+          </button>
+          <div class="profile-bar-status">
+            <span class="health-dot" id="profileHealthDot"></span>
+            <span id="profileHealthText">Đang kiểm tra...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty state: chưa chọn profile -->
+      <div class="empty-state" id="emptyStateNoProfile">
+        <div class="empty-state-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <h3>Chào mừng đến 9Router Tools</h3>
+        <p>Chọn hoặc tạo một Profile ở thanh bên trái để bắt đầu quản lý cấu hình</p>
+      </div>
+
+      <!-- Empty state: đã chọn profile, chưa import -->
+      <div class="empty-state hidden" id="emptyStateNoImport">
+        <div class="empty-state-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/>
+            <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
+          </svg>
+        </div>
+        <h3>Hãy nạp danh sách tài khoản mới</h3>
+        <p>Cấu hình gốc đã sẵn sàng. Hãy kéo thả file JSON hoặc chọn file để bắt đầu gộp.</p>
+      </div>
+
+      <!-- Import File Dropzone -->
+      <section class="file-inputs hidden" id="importSection">
+        <div class="dropzone" id="importDropzone">
+          <input type="file" id="importFileInput" accept=".json" class="file-input">
+          <div class="dropzone-content">
+            <div class="dropzone-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+            </div>
+            <h3>Kéo thả file tài khoản vào đây</h3>
+            <p>Hoặc nhấp vào đây để chọn file JSON tài khoản từ thiết bị</p>
+            <span class="file-name" id="importFileName">Chưa chọn tệp</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive Workspace (hiện khi đã merge) -->
+      <section class="workspace hidden" id="workspace">
+        <!-- Control Toolbar (Chức năng mở rộng) -->
+        <div class="workspace-toolbar">
+          <div class="toolbar-left">
+            <button class="btn btn-secondary btn-sm" id="btnManualAdd">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              Thêm thủ công
+            </button>
+            <button class="btn btn-secondary btn-sm" id="btnAppendFile">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+              Nạp thêm từ file
+            </button>
+            <button class="btn btn-secondary btn-sm" id="btnPingTest">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+              Ping Test
+            </button>
+            <button class="btn btn-danger-dim btn-sm" id="btnResetQueue">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"/>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+              </svg>
+              Dọn dẹp bản gộp
+            </button>
+          </div>
+
+          <div class="toolbar-right">
+            <input type="text" id="accountSearchInput" placeholder="Tìm tài khoản..." style="padding: 6px 12px; border-radius: 6px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-primary); font-size: 11px; outline: none; width: 140px; margin-right: 8px; font-family: inherit; transition: all 0.3s;" oninput="renderAccountCards()">
+            <div class="filters">
+              <button class="filter-btn active" data-filter="all">Tất cả</button>
+              <button class="filter-btn" data-filter="update">Cập nhật (<span id="updateCount">0</span>)</button>
+              <button class="filter-btn" data-filter="new">Thêm mới (<span id="newCount">0</span>)</button>
+              <button class="filter-btn" data-filter="warning">Cảnh báo (<span id="warningCount">0</span>)</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="workspace-header-title">
+          <h2>Bản xem trước gộp tài khoản</h2>
+        </div>
+
+        <!-- Accounts Table List -->
+        <div class="accounts-table-container">
+          <table class="accounts-table">
+            <thead>
+              <tr>
+                <th style="width: 40px; text-align: center;"><input type="checkbox" id="selectAllAccountsCheckbox" checked></th>
+                <th>Tài khoản (Name)</th>
+                <th>Provider</th>
+                <th>Độ ưu tiên</th>
+                <th>Trạng thái / Ping</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody id="accountsTableBody">
+              <!-- Rendered dynamically by app.js -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Action Panel & Console Export -->
+        <div class="action-panel">
+          <div class="merge-summary-wrapper">
+            <div class="merge-summary" id="mergeSummary">
+              <!-- Tóm tắt kết quả merge -->
+            </div>
+            <!-- Bulk Export Area -->
+            <div class="bulk-export-console">
+              <select id="exportProviderSelect" class="styled-select">
+                <option value="all">Tất cả Provider</option>
+                <option value="codex">codex</option>
+                <option value="gemini-cli">gemini-cli</option>
+                <option value="openai">openai</option>
+                <option value="deepseek">deepseek</option>
+              </select>
+              <button class="btn btn-secondary btn-sm" id="btnExportProvider">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                  <polyline points="16 6 12 2 8 6"/>
+                  <line x1="12" y1="2" x2="12" y2="15"/>
+                </svg>
+                Export theo Provider
+              </button>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn btn-secondary" id="downloadBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Tải file JSON đã gộp
+            </button>
+            <button class="btn btn-primary" id="saveDirectBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                <polyline points="17 21 17 13 7 13 7 21"/>
+                <polyline points="7 3 7 8 15 8"/>
+              </svg>
+              Ghi đè trực tiếp lên máy
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Logs Console (Collapsible with Toggle button) -->
+      <section class="console-panel collapsed" id="consolePanel">
+        <div class="console-header" id="consoleHeader">
+          <div class="console-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
+            </svg>
+            <span>Terminal Logs</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <button id="clearLogsBtn" class="console-btn-text">Xóa log</button>
+            <button id="toggleConsoleBtn" class="console-toggle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="toggle-icon">
+                <polyline points="18 15 12 9 6 15"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="console-body" id="consoleBody">
+          <div class="log-line system">Ready. Hãy tạo hoặc chọn Profile để bắt đầu.</div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ═══ SIDE PANEL ═══ -->
+    <aside class="side-panel hidden" id="rightPanel">
+      <div class="side-panel-tabs">
+        <button class="tab-btn active" id="tabBtnBackups">Sao lưu</button>
+        <button class="tab-btn" id="tabBtnHistory">Lịch sử</button>
+      </div>
+      <div class="tab-content" id="backupsTab">
+        <div class="backup-list" id="backupList"></div>
+      </div>
+      <div class="tab-content hidden" id="historyTab">
+        <div class="history-list" id="historyList"></div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Modal Overlay -->
+  <div class="modal-overlay hidden" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header" id="modalHeader">
+        <h3>Modal Title</h3>
+        <button class="modal-close" id="modalCloseBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Dynamic content -->
+      </div>
+      <div class="modal-footer" id="modalFooter">
+        <!-- Dynamic buttons -->
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>9Router Tools • Thiết kế và tối ưu bởi Antigravity AI Coder</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

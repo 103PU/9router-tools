@@ -1,0 +1,43 @@
+- generic [active] [ref=f3e1]:
+  - banner [ref=f3e2]:
+    - generic [ref=f3e7]:
+      - heading "9Router Tools" [level=1] [ref=f3e8]
+      - text: Config Management
+    - generic [ref=f3e9]:
+      - generic [ref=f3e10]: Backend Active
+      - button "Cấu hình hệ thống" [ref=f3e13] [cursor=pointer]
+  - generic [ref=f3e17]:
+    - complementary [ref=f3e18]:
+      - generic [ref=f3e19]:
+        - heading "Profiles" [level=3] [ref=f3e20]
+        - generic [ref=f3e21]:
+          - button "Tạo mới" [ref=f3e22] [cursor=pointer]
+          - button "Nhập Gói" [ref=f3e24] [cursor=pointer]
+      - generic [ref=f3e29] [cursor=pointer]:
+        - generic [ref=f3e30]:
+          - generic "VT Account Test" [ref=f3e34]
+          - generic [ref=f3e35]: account-config
+        - generic "E:\\PROJECT\\9Router Tools\\.9router-data\\test-config.json" [ref=f3e36]:
+          - generic [ref=f3e37]: "Ghi đè: Chưa ghi"
+          - generic [ref=f3e38]: E:\PROJECT\9...est-config.json
+        - generic [ref=f3e39]:
+          - generic [ref=f3e40]: 0 backups
+          - generic [ref=f3e41]: Sẵn sàng
+          - generic [ref=f3e42]: Broken
+        - button "⋮" [ref=f3e44]
+    - main [ref=f3e45]:
+      - generic [ref=f3e46]:
+        - heading "Chào mừng đến 9Router Tools" [level=3] [ref=f3e50]
+        - paragraph [ref=f3e51]: Chọn hoặc tạo một Profile ở thanh bên trái để bắt đầu quản lý cấu hình
+      - generic [ref=f3e52]:
+        - generic [ref=f3e53] [cursor=pointer]:
+          - generic [ref=f3e54]: Terminal Logs
+          - generic [ref=f3e58]:
+            - button "Xóa log" [ref=f3e59]
+            - button [ref=f3e60]
+        - generic [ref=f3e63]:
+          - generic [ref=f3e64]: Ready. Hãy tạo hoặc chọn Profile để bắt đầu.
+          - generic [ref=f3e65]: "[4:20:01 AM] Đã kết nối với Local Server Backend."
+          - generic [ref=f3e66]: "[4:20:01 AM] Đã áp dụng cấu hình hệ thống: tối đa 15 bản sao lưu."
+  - contentinfo [ref=f3e67]:
+    - paragraph [ref=f3e68]: 9Router Tools • Thiết kế và tối ưu bởi Antigravity AI Coder

@@ -1,0 +1,55 @@
+- generic [active] [ref=f6e1]:
+  - banner [ref=f6e2]:
+    - generic [ref=f6e7]:
+      - heading "9Router Tools" [level=1] [ref=f6e8]
+      - text: Config Management
+    - generic [ref=f6e9]:
+      - generic [ref=f6e10]: Backend Active
+      - button "Cấu hình hệ thống" [ref=f6e13] [cursor=pointer]
+  - generic [ref=f6e17]:
+    - complementary [ref=f6e18]:
+      - generic [ref=f6e19]:
+        - heading "Profiles" [level=3] [ref=f6e20]
+        - generic [ref=f6e21]:
+          - button "Tạo mới" [ref=f6e22] [cursor=pointer]
+          - button "Nhập Gói" [ref=f6e24] [cursor=pointer]
+      - paragraph [ref=f6e30]: Chưa có profile nào
+    - main [ref=f6e31]:
+      - generic [ref=f6e32]:
+        - heading "Chào mừng đến 9Router Tools" [level=3] [ref=f6e36]
+        - paragraph [ref=f6e37]: Chọn hoặc tạo một Profile ở thanh bên trái để bắt đầu quản lý cấu hình
+      - generic [ref=f6e38]:
+        - generic [ref=f6e39] [cursor=pointer]:
+          - generic [ref=f6e40]: Terminal Logs
+          - generic [ref=f6e44]:
+            - button "Xóa log" [ref=f6e45]
+            - button [ref=f6e46]
+        - generic [ref=f6e49]:
+          - generic [ref=f6e50]: Ready. Hãy tạo hoặc chọn Profile để bắt đầu.
+          - generic [ref=f6e51]: "[4:26:23 AM] Đã kết nối với Local Server Backend."
+          - generic [ref=f6e52]: "[4:26:23 AM] Đã áp dụng cấu hình hệ thống: tối đa 15 bản sao lưu."
+          - generic [ref=f6e53]: "[4:26:23 AM] Đã tải 0 profile(s)."
+  - generic [ref=f6e57]:
+    - generic [ref=f6e58]:
+      - heading "Tạo Profile mới" [level=3] [ref=f6e59]
+      - button [ref=f6e60] [cursor=pointer]
+    - generic [ref=f6e64]:
+      - generic [ref=f6e65]:
+        - generic [ref=f6e66]: Tên Profile
+        - 'textbox "VD: VT Account Main" [ref=f6e67]'
+      - generic [ref=f6e68]:
+        - generic [ref=f6e69]: Đường dẫn thư mục gốc (Root Path)
+        - generic [ref=f6e70]:
+          - 'textbox "VD: C:\\Users\\Admin\\Downloads\\dung-9Router.json" [ref=f6e71]'
+          - button "Đang chọn..." [disabled] [ref=f6e79] [cursor=pointer]
+      - generic [ref=f6e73]:
+        - generic [ref=f6e74]: Loại dữ liệu
+        - combobox [ref=f6e75]:
+          - option "Account Config" [selected]
+          - option "Proxy Config"
+          - option "Khác"
+    - generic [ref=f6e76]:
+      - button "Hủy" [ref=f6e77] [cursor=pointer]
+      - button "Tạo Profile" [ref=f6e78] [cursor=pointer]
+  - contentinfo [ref=f6e54]:
+    - paragraph [ref=f6e55]: 9Router Tools • Thiết kế và tối ưu bởi Antigravity AI Coder

@@ -1,0 +1,147 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e7]:
+      - heading "9Router Tools" [level=1] [ref=e8]
+      - text: Config Management
+    - generic [ref=e9]:
+      - generic [ref=e10]: Backend Active
+      - button "Cấu hình hệ thống" [ref=e13] [cursor=pointer]
+  - generic [ref=e17]:
+    - complementary [ref=e18]:
+      - generic [ref=e19]:
+        - heading "Profiles" [level=3] [ref=e20]
+        - generic [ref=e21]:
+          - button "Tạo mới" [ref=e22] [cursor=pointer]
+          - button "Nhập Gói" [ref=e24] [cursor=pointer]
+      - generic [ref=e29] [cursor=pointer]:
+        - generic [ref=e30]:
+          - generic "VT Account Main" [ref=e34]
+          - generic [ref=e35]: account-config
+        - generic "C:\\Users\\Administrator\\Downloads\\dung-9Router.json" [ref=e36]:
+          - generic [ref=e37]: "Ghi đè: 1 giờ trước"
+          - generic [ref=e38]: C:\Users\Adm...ng-9Router.json
+        - generic [ref=e39]:
+          - generic [ref=e40]: 0 backups
+          - generic [ref=e41]: Đã ghi
+          - generic [ref=e42]: Broken
+        - button "⋮" [ref=e44]
+      - paragraph [ref=e46]: Chưa có profile nào
+    - main [ref=e47]:
+      - generic [ref=e48]:
+        - generic [ref=e49]:
+          - generic [ref=e50]: VT Account Main
+          - generic [ref=e51]: C:\Users\Administrator\Downloads\dung-9Router.json
+        - generic [ref=e52]:
+          - button "Copy Path" [ref=e53] [cursor=pointer]
+          - button "Export Data" [ref=e58] [cursor=pointer]
+          - button "Check Health" [ref=e63] [cursor=pointer]
+          - generic [ref=e67]: File OK
+      - generic [ref=e70]:
+        - heading "Chào mừng đến 9Router Tools" [level=3] [ref=e74]
+        - paragraph [ref=e75]: Chọn hoặc tạo một Profile ở thanh bên trái để bắt đầu quản lý cấu hình
+      - generic [ref=e76]:
+        - heading "Hãy nạp danh sách tài khoản mới" [level=3] [ref=e81]
+        - paragraph [ref=e82]: Cấu hình gốc đã sẵn sàng. Hãy kéo thả file JSON hoặc chọn file để bắt đầu gộp.
+      - generic [ref=e84] [cursor=pointer]:
+        - button "Choose File" [ref=e85]
+        - generic [ref=e86]:
+          - heading "Kéo thả file tài khoản vào đây" [level=3] [ref=e91]
+          - paragraph [ref=e92]: Hoặc nhấp vào đây để chọn file JSON tài khoản từ thiết bị
+          - generic [ref=e93]: Chưa chọn tệp
+      - generic [ref=e94]:
+        - generic [ref=e95]:
+          - generic [ref=e96]:
+            - button "Thêm thủ công" [ref=e97] [cursor=pointer]
+            - button "Ping Test" [ref=e99] [cursor=pointer]
+            - button "Dọn dẹp bản gộp" [ref=e102] [cursor=pointer]
+          - generic [ref=e105]:
+            - textbox "Tìm tài khoản..." [ref=e106]
+            - generic [ref=e107]:
+              - button "Tất cả" [ref=e108] [cursor=pointer]
+              - button "Cập nhật (0)" [ref=e109] [cursor=pointer]
+              - button "Thêm mới (0)" [ref=e110] [cursor=pointer]
+              - button "Cảnh báo (0)" [ref=e111] [cursor=pointer]
+        - heading "Bản xem trước gộp tài khoản" [level=2] [ref=e113]
+        - table [ref=e115]:
+          - rowgroup [ref=e116]:
+            - row [ref=e117]:
+              - columnheader [ref=e118]:
+                - checkbox [checked] [ref=e119]
+              - columnheader "Tài khoản (Name)" [ref=e120]
+              - columnheader "Provider" [ref=e121]
+              - columnheader "Độ ưu tiên" [ref=e122]
+              - columnheader "Trạng thái / Ping" [ref=e123]
+              - columnheader "Hành động" [ref=e124]
+          - rowgroup
+        - generic [ref=e125]:
+          - generic [ref=e127]:
+            - combobox [ref=e128] [cursor=pointer]:
+              - option "Tất cả Provider" [selected]
+              - option "codex"
+              - option "gemini-cli"
+              - option "openai"
+              - option "deepseek"
+            - button "Export theo Provider" [ref=e129] [cursor=pointer]
+          - generic [ref=e133]:
+            - button "Tải file JSON đã gộp" [ref=e134] [cursor=pointer]
+            - button "Ghi đè trực tiếp lên máy" [ref=e138] [cursor=pointer]
+      - generic [ref=e143]:
+        - generic [ref=e144] [cursor=pointer]:
+          - generic [ref=e145]: Terminal Logs
+          - generic [ref=e149]:
+            - button "Xóa log" [ref=e150]
+            - button [ref=e151]
+        - generic [ref=e154]:
+          - generic [ref=e155]: Ready. Hãy tạo hoặc chọn Profile để bắt đầu.
+          - generic [ref=e156]: "[4:08:58 AM] Đã kết nối với Local Server Backend."
+          - generic [ref=e157]: "[4:08:58 AM] Đã áp dụng cấu hình hệ thống: tối đa 15 bản sao lưu."
+          - generic [ref=e158]: "[4:08:58 AM] Đang tải cấu hình gốc từ server..."
+          - generic [ref=e159]: "[4:08:58 AM] Đã tải cấu hình gốc thành công. (18 connections)"
+          - generic [ref=e160]: "[4:08:58 AM] Đã chọn profile: VT Account Main"
+          - generic [ref=e161]: "[4:08:58 AM] Đã tải 1 profile(s)."
+    - complementary [ref=e162]:
+      - generic:
+        - button "Sao lưu" [ref=e163] [cursor=pointer]
+        - button "Lịch sử" [ref=e164] [cursor=pointer]
+      - generic [ref=e165]: Chưa có bản sao lưu nào
+      - generic [ref=e166]:
+        - generic:
+          - generic [ref=e167]:
+            - generic:
+              - generic [ref=e168]: Xoá sao lưu
+              - generic [ref=e169]: 37 phút trước
+            - generic: "Profile: VT Account Main"
+            - generic: "Xoá bản sao lưu: 2026-07-09T19-39-17-402Z.json"
+          - generic [ref=e170]:
+            - generic:
+              - generic [ref=e171]: Xoá sao lưu
+              - generic [ref=e172]: 37 phút trước
+            - generic: "Profile: VT Account Main"
+            - generic: "Xoá bản sao lưu: 2026-07-09T19-40-53-778Z.json"
+          - generic [ref=e173]:
+            - generic:
+              - generic [ref=e174]: Ghi đè cấu hình
+              - generic [ref=e175]: 1 giờ trước
+            - generic: "Profile: VT Account Main"
+            - generic: Ghi 61117 bytes, 10 keys cấp cao nhất
+          - generic [ref=e176]:
+            - generic:
+              - generic [ref=e177]: Ghi đè cấu hình
+              - generic [ref=e178]: 1 giờ trước
+            - generic: "Profile: VT Account Main"
+            - generic: Ghi 61117 bytes, 10 keys cấp cao nhất
+          - generic [ref=e179]:
+            - generic:
+              - generic [ref=e180]: Cập nhật Settings
+              - generic [ref=e181]: 2 giờ trước
+            - generic: Cập nhật cấu hình hệ thống
+          - generic [ref=e182]:
+            - generic:
+              - generic [ref=e183]: Cập nhật Settings
+              - generic [ref=e184]: 2 giờ trước
+            - generic: Cập nhật cấu hình hệ thống
+  - generic [ref=e187]:
+    - heading "Modal Title" [level=3] [ref=e188]
+    - button [ref=e189] [cursor=pointer]
+  - contentinfo [ref=e195]:
+    - paragraph [ref=e196]: 9Router Tools • Thiết kế và tối ưu bởi Antigravity AI Coder

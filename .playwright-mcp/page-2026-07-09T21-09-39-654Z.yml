@@ -1,0 +1,87 @@
+- generic [ref=f1e1]:
+  - banner [ref=f1e2]:
+    - generic [ref=f1e7]:
+      - heading "9Router Tools" [level=1] [ref=f1e8]
+      - text: Config Management
+    - generic [ref=f1e9]:
+      - generic [ref=f1e10]: Backend Active
+      - button "Cấu hình hệ thống" [active] [ref=f1e13] [cursor=pointer]
+  - generic [ref=f1e17]:
+    - complementary [ref=f1e18]:
+      - generic [ref=f1e19]:
+        - heading "Profiles" [level=3] [ref=f1e20]
+        - generic [ref=f1e21]:
+          - button "Tạo mới" [ref=f1e22] [cursor=pointer]
+          - button "Nhập Gói" [ref=f1e24] [cursor=pointer]
+      - generic [ref=f1e69] [cursor=pointer]:
+        - generic [ref=f1e70]:
+          - generic "VT Account Main" [ref=f1e74]
+          - generic [ref=f1e75]: account-config
+        - generic "C:\\Users\\Administrator\\Downloads\\dung-9Router.json" [ref=f1e76]:
+          - generic [ref=f1e77]: "Ghi đè: 1 giờ trước"
+          - generic [ref=f1e78]: C:\Users\Adm...ng-9Router.json
+        - generic [ref=f1e79]:
+          - generic [ref=f1e80]: 0 backups
+          - generic [ref=f1e81]: Đã ghi
+          - generic [ref=f1e82]: Broken
+        - button "⋮" [ref=f1e84]
+    - main [ref=f1e45]:
+      - generic [ref=f1e85]:
+        - generic [ref=f1e86]:
+          - generic [ref=f1e87]: VT Account Main
+          - generic [ref=f1e88]: C:\Users\Administrator\Downloads\dung-9Router.json
+        - generic [ref=f1e89]:
+          - button "Copy Path" [ref=f1e90] [cursor=pointer]
+          - button "Export Data" [ref=f1e95] [cursor=pointer]
+          - button "Check Health" [ref=f1e100] [cursor=pointer]
+          - generic [ref=f1e104]: File OK
+      - generic [ref=f1e107]:
+        - heading "Hãy nạp danh sách tài khoản mới" [level=3] [ref=f1e112]
+        - paragraph [ref=f1e113]: Cấu hình gốc đã sẵn sàng. Hãy kéo thả file JSON hoặc chọn file để bắt đầu gộp.
+      - generic [ref=f1e115] [cursor=pointer]:
+        - button "Choose File" [ref=f1e116]
+        - generic [ref=f1e117]:
+          - heading "Kéo thả file tài khoản vào đây" [level=3] [ref=f1e122]
+          - paragraph [ref=f1e123]: Hoặc nhấp vào đây để chọn file JSON tài khoản từ thiết bị
+          - generic [ref=f1e124]: Chưa chọn tệp
+      - generic [ref=f1e52]:
+        - generic [ref=f1e53] [cursor=pointer]:
+          - generic [ref=f1e54]: Terminal Logs
+          - generic [ref=f1e58]:
+            - button "Xóa log" [ref=f1e59]
+            - button [ref=f1e60]
+        - generic [ref=f1e63]:
+          - generic [ref=f1e64]: Ready. Hãy tạo hoặc chọn Profile để bắt đầu.
+          - generic [ref=f1e65]: "[4:09:30 AM] Đã kết nối với Local Server Backend."
+          - generic [ref=f1e66]: "[4:09:30 AM] Đã áp dụng cấu hình hệ thống: tối đa 15 bản sao lưu."
+          - generic [ref=f1e125]: "[4:09:30 AM] Đang tải cấu hình gốc từ server..."
+          - generic [ref=f1e126]: "[4:09:30 AM] Đã tải cấu hình gốc thành công. (18 connections)"
+          - generic [ref=f1e127]: "[4:09:30 AM] Đã chọn profile: VT Account Main"
+          - generic [ref=f1e128]: "[4:09:30 AM] Đã tải 1 profile(s)."
+    - complementary [ref=f1e129]:
+      - generic [ref=f1e130]:
+        - button "Sao lưu" [ref=f1e131] [cursor=pointer]
+        - button "Lịch sử" [ref=f1e132] [cursor=pointer]
+      - generic [ref=f1e133]: Chưa có bản sao lưu nào
+  - generic [ref=f1e137]:
+    - generic [ref=f1e138]:
+      - heading "Cấu hình hệ thống" [level=3] [ref=f1e139]
+      - button [ref=f1e140] [cursor=pointer]
+    - generic [ref=f1e144]:
+      - generic [ref=f1e145]:
+        - generic [ref=f1e146]: Số bản sao lưu giữ lại tối đa (Retention Limit)
+        - spinbutton [ref=f1e147]: "15"
+      - generic [ref=f1e148]:
+        - checkbox "Luôn hiển thị xác nhận trước khi ghi đè" [ref=f1e149]
+        - generic [ref=f1e150] [cursor=pointer]: Luôn hiển thị xác nhận trước khi ghi đè
+      - generic [ref=f1e151]:
+        - generic [ref=f1e152]: Màu sắc nhấn (Accent Color)
+        - combobox [ref=f1e153]:
+          - option "Cyan (Mặc định)"
+          - option "Purple (Tím Neon)"
+          - option "Emerald (Xanh Lá)" [selected]
+    - generic [ref=f1e154]:
+      - button "Hủy" [ref=f1e155] [cursor=pointer]
+      - button "Lưu cài đặt" [ref=f1e156] [cursor=pointer]
+  - contentinfo [ref=f1e67]:
+    - paragraph [ref=f1e68]: 9Router Tools • Thiết kế và tối ưu bởi Antigravity AI Coder

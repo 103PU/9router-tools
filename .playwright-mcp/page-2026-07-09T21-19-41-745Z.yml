@@ -1,0 +1,74 @@
+- generic [active] [ref=f2e1]:
+  - banner [ref=f2e2]:
+    - generic [ref=f2e7]:
+      - heading "9Router Tools" [level=1] [ref=f2e8]
+      - text: Config Management
+    - generic [ref=f2e9]:
+      - generic [ref=f2e10]: Backend Active
+      - button "Cấu hình hệ thống" [ref=f2e13] [cursor=pointer]
+  - generic [ref=f2e17]:
+    - complementary [ref=f2e18]:
+      - generic [ref=f2e19]:
+        - heading "Profiles" [level=3] [ref=f2e20]
+        - generic [ref=f2e21]:
+          - button "Tạo mới" [ref=f2e22] [cursor=pointer]
+          - button "Nhập Gói" [ref=f2e24] [cursor=pointer]
+      - generic [ref=f2e77] [cursor=pointer]:
+        - generic [ref=f2e78]:
+          - generic "VT Account Test" [ref=f2e82]
+          - generic [ref=f2e83]: account-config
+        - generic "E:\\PROJECT\\9Router Tools\\.9router-data\\test-config.json" [ref=f2e84]:
+          - generic [ref=f2e85]: "Ghi đè: Chưa ghi"
+          - generic [ref=f2e86]: E:\PROJECT\9...est-config.json
+        - generic [ref=f2e87]:
+          - generic [ref=f2e88]: 0 backups
+          - generic [ref=f2e89]: Sẵn sàng
+          - generic [ref=f2e90]: Broken
+        - button "⋮" [ref=f2e92]
+    - main [ref=f2e31]:
+      - generic [ref=f2e93]:
+        - generic [ref=f2e94]:
+          - generic [ref=f2e95]: VT Account Test
+          - generic [ref=f2e96]: E:\PROJECT\9Router Tools\.9router-data\test-config.json
+        - generic [ref=f2e97]:
+          - button "Copy Path" [ref=f2e98] [cursor=pointer]
+          - button "Export Data" [ref=f2e103] [cursor=pointer]
+          - button "Check Health" [ref=f2e108] [cursor=pointer]
+          - generic [ref=f2e112]: File không tìm thấy
+      - generic [ref=f2e115]:
+        - heading "Hãy nạp danh sách tài khoản mới" [level=3] [ref=f2e120]
+        - paragraph [ref=f2e121]: Cấu hình gốc đã sẵn sàng. Hãy kéo thả file JSON hoặc chọn file để bắt đầu gộp.
+      - generic [ref=f2e124] [cursor=pointer]:
+        - heading "Kéo thả file tài khoản vào đây" [level=3] [ref=f2e129]
+        - paragraph [ref=f2e130]: Hoặc nhấp vào đây để chọn file JSON tài khoản từ thiết bị
+        - generic [ref=f2e131]: Chưa chọn tệp
+      - generic [ref=f2e38]:
+        - generic [ref=f2e39] [cursor=pointer]:
+          - generic [ref=f2e40]: Terminal Logs
+          - generic [ref=f2e44]:
+            - button "Xóa log" [ref=f2e45]
+            - button [ref=f2e46]
+        - generic [ref=f2e49]:
+          - generic [ref=f2e50]: Ready. Hãy tạo hoặc chọn Profile để bắt đầu.
+          - generic [ref=f2e51]: "[4:19:24 AM] Đã kết nối với Local Server Backend."
+          - generic [ref=f2e52]: "[4:19:24 AM] Đã áp dụng cấu hình hệ thống: tối đa 15 bản sao lưu."
+          - generic [ref=f2e55]: "[4:19:24 AM] Đã tải 0 profile(s)."
+          - generic [ref=f2e132]: "[4:19:40 AM] Tạo profile mới: VT Account Test"
+          - generic [ref=f2e133]: "[4:19:40 AM] Đang tải cấu hình gốc từ server..."
+          - generic [ref=f2e134]: "[4:19:40 AM] Lỗi tải cấu hình gốc: File không tồn tại: E:\\PROJECT\\9Router Tools\\.9router-data\\test-config.json"
+          - generic [ref=f2e135]: "[4:19:40 AM] Đã chọn profile: VT Account Test"
+          - generic [ref=f2e136]: "[4:19:40 AM] Đã tải 1 profile(s)."
+          - generic [ref=f2e137]: "[4:19:40 AM] Đang tải cấu hình gốc từ server..."
+          - generic [ref=f2e138]: "[4:19:40 AM] Lỗi tải cấu hình gốc: File không tồn tại: E:\\PROJECT\\9Router Tools\\.9router-data\\test-config.json"
+          - generic [ref=f2e139]: "[4:19:40 AM] Đã chọn profile: VT Account Test"
+    - complementary [ref=f2e140]:
+      - generic [ref=f2e141]:
+        - button "Sao lưu" [ref=f2e142] [cursor=pointer]
+        - button "Lịch sử" [ref=f2e143] [cursor=pointer]
+      - generic [ref=f2e144]: Chưa có bản sao lưu nào
+  - generic [ref=f2e147]:
+    - generic [ref=f2e148]: Đã tạo profile "VT Account Test" thành công!
+    - generic [ref=f2e154]: "Không thể tải cấu hình gốc: File không tồn tại: E:\\PROJECT\\9Router Tools\\.9router-data\\test-config.json"
+    - generic [ref=f2e161]: "Không thể tải cấu hình gốc: File không tồn tại: E:\\PROJECT\\9Router Tools\\.9router-data\\test-config.json"
+  - contentinfo [ref=f2e53]:
+    - paragraph [ref=f2e54]: 9Router Tools • Thiết kế và tối ưu bởi Antigravity AI Coder
