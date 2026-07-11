@@ -887,18 +887,28 @@ function renderAccountCards() {
           '<div style="font-size: 10px; color: var(--text-secondary);">' + changesLabel + '</div>' +
         '</div>' +
       '</td>' +
-      '<td style="padding: 8px 16px; text-align: right; display: flex; gap: 8px; justify-content: flex-end; align-items: center; height: 100%;">' +
-        pingHTML +
-        '<button class="btn-icon" data-action="diff" title="Xem chi tiết thay đổi" style="padding: 4px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 4px; cursor: pointer; color: var(--text-primary); display: flex; align-items: center; justify-content: center;">' +
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px; height:12px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' +
-        '</button>' +
-        (acc.status === 'warning' ? 
-        '<button class="btn-icon" data-action="edit-warning" title="Sửa thông tin thiếu" style="padding: 4px; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 4px; cursor: pointer; color: var(--color-warning); display: flex; align-items: center; justify-content: center;">' +
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px; height:12px;"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>' +
-        '</button>' : '') +
-        '<button class="btn-icon" data-action="delete" title="Xoá khỏi hàng đợi" style="padding: 4px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 4px; cursor: pointer; color: var(--color-danger); display: flex; align-items: center; justify-content: center;">' +
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px; height:12px;"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>' +
-        '</button>' +
+      '<td style="padding: 8px 16px; text-align: right; position: relative; overflow: visible;">' +
+        '<div style="display: flex; gap: 8px; justify-content: flex-end; align-items: center;">' +
+          pingHTML +
+          '<div class="row-actions-wrapper" style="position: relative; display: inline-block;">' +
+            '<button class="btn-more btn-row-more" style="width: 26px; height: 26px; font-size: 14px; display: flex; align-items: center; justify-content: center;" title="Thao tác">⋮</button>' +
+            '<div class="row-actions-dropdown">' +
+              '<div class="dropdown-item" data-row-action="diff">' +
+                '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 12px; height: 12px; margin-right: 6px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' +
+                'Xem thay đổi' +
+              '</div>' +
+              (acc.status === 'warning' ? 
+              '<div class="dropdown-item" data-row-action="edit-warning" style="color: var(--color-warning);">' +
+                '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 12px; height: 12px; margin-right: 6px;"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>' +
+                'Sửa thông tin' +
+              '</div>' : '') +
+              '<div class="dropdown-item danger" data-row-action="delete">' +
+                '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 12px; height: 12px; margin-right: 6px;"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>' +
+                'Loại khỏi hàng đợi' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
       '</td>';
 
     var cb = tr.querySelector('.row-checkbox');
@@ -923,18 +933,38 @@ function renderAccountCards() {
       updateAccountPriority(acc.id, parseInt(e.target.value, 10) || 5);
     });
 
-    tr.querySelector('[data-action="diff"]').addEventListener('click', function () {
-      showAccountDiffModal(acc);
+    // Toggle row action dropdown
+    var btnRowMore = tr.querySelector('.btn-row-more');
+    var rowDropdown = tr.querySelector('.row-actions-dropdown');
+    btnRowMore.addEventListener('click', function (e) {
+      e.stopPropagation();
+      // Đóng tất cả dropdown khác (bao gồm cả card profile dropdown)
+      document.querySelectorAll('.row-actions-dropdown.active, .profile-card-dropdown.active').forEach(function (d) {
+        if (d !== rowDropdown) d.classList.remove('active');
+      });
+      rowDropdown.classList.toggle('active');
     });
 
-    if (acc.status === 'warning') {
-      tr.querySelector('[data-action="edit-warning"]').addEventListener('click', function () {
-        showEditWarningModal(acc);
-      });
-    }
+    rowDropdown.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var actionItem = e.target.closest('[data-row-action]');
+      if (!actionItem) return;
 
-    tr.querySelector('[data-action="delete"]').addEventListener('click', function () {
-      removeAccountFromMerge(acc.id);
+      var action = actionItem.dataset.rowAction;
+      rowDropdown.classList.remove('active');
+
+      if (action === 'diff') {
+        showAccountDiffModal(acc);
+      } else if (action === 'edit-warning') {
+        showEditWarningModal(acc);
+      } else if (action === 'delete') {
+        removeAccountFromMerge(acc.id);
+      }
+    });
+
+    // Đóng dropdown khi click ra ngoài document
+    document.addEventListener('click', function () {
+      rowDropdown.classList.remove('active');
     });
 
     DOM.accountsTableBody.appendChild(tr);

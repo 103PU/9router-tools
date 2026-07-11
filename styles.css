@@ -799,11 +799,15 @@ header {
   display: flex;
   flex-direction: column;
   transition: all 0.4s var(--cubic-bezier);
-  height: 240px;
+  height: 320px;
 }
 
 .console-panel.collapsed {
   height: 44px;
+}
+
+.console-panel.collapsed .console-body {
+  display: none !important;
 }
 
 .console-header {
@@ -1414,4 +1418,26 @@ select option {
   background: #080c14 !important;
   color: #f3f4f6 !important;
 }
+
+/* Table row dropdown actions */
+.row-actions-dropdown {
+  position: absolute;
+  right: 0;
+  top: 28px;
+  background: rgba(10, 15, 30, 0.98) !important;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  width: 180px;
+  display: none;
+  flex-direction: column;
+  padding: 4px 0;
+  z-index: 1000;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.row-actions-dropdown.active {
+  display: flex;
+}
+
 
