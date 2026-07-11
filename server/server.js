@@ -5,7 +5,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const { exec } = require('child_process');
+const { exec, execFile } = require('child_process');
 
 const {
   ensureDataDirectories,
@@ -338,11 +338,19 @@ function handleOpenFolder(req, res) {
     return jsonResponse(res, 400, { error: 'Thiếu tham số path' });
   }
 
-  // Lấy thư mục cha chứa file theo đúng spec mới
+  // 1. Security Check: Validate filePath must match rootPath of a registered profile
+  const state = readState();
+  const profileExists = state.profiles.some(p => p.rootPath === filePath);
+  if (!profileExists) {
+    console.warn(`[Security] Cảnh báo: Yêu cầu truy cập thư mục của file không hợp lệ: ${filePath}`);
+    return jsonResponse(res, 403, { error: 'Quyền truy cập bị từ chối: Đường dẫn không thuộc Profile nào đã đăng ký.' });
+  }
+
+  // 2. Lấy thư mục cha chứa file theo đúng spec mới
   const parentDir = path.dirname(filePath);
 
-  const command = `explorer.exe "${parentDir}"`;
-  exec(command, (error) => {
+  // 3. Security Check: Sử dụng execFile thay vì exec với string nội suy
+  execFile('explorer.exe', [parentDir], (error) => {
     if (error && error.code !== 1) {
       console.error('[System] Lỗi mở thư mục:', error);
       return jsonResponse(res, 500, { error: 'Không thể mở thư mục: ' + error.message });
