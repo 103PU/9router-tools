@@ -848,6 +848,31 @@ function handleSelectFile(req, res) {
   });
 }
 
+function handleOpenFolder(req, res) {
+  const queryString = req.url.split('?')[1] || '';
+  const params = {};
+  queryString.split('&').forEach(pair => {
+    const parts = pair.split('=');
+    if (parts[0]) {
+      params[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1] || '');
+    }
+  });
+
+  const filePath = params.path;
+  if (!filePath) {
+    return jsonResponse(res, 400, { error: 'Thiếu tham số path' });
+  }
+
+  const command = `explorer.exe /select,"${filePath}"`;
+  exec(command, (error) => {
+    if (error && error.code !== 1) {
+      console.error('[System] Lỗi mở thư mục:', error);
+      return jsonResponse(res, 500, { error: 'Không thể mở thư mục: ' + error.message });
+    }
+    return jsonResponse(res, 200, { success: true });
+  });
+}
+
 
 // ---------------------------------------------------------------------------
 // Router — match request to handler
@@ -857,6 +882,11 @@ function routeAPI(req, res) {
   const method = req.method;
   const parts = urlParts(req.url);
   // parts: ['', 'api', ...]
+
+  // GET /api/system/open-folder
+  if (method === 'GET' && parts.length === 4 && parts[1] === 'api' && parts[2] === 'system' && parts[3] === 'open-folder') {
+    return handleOpenFolder(req, res);
+  }
 
   // GET /api/system/select-file
   if (method === 'GET' && parts.length === 4 && parts[1] === 'api' && parts[2] === 'system' && parts[3] === 'select-file') {
@@ -1023,7 +1053,7 @@ const server = http.createServer((req, res) => {
 ensureDataDirectories();
 
 server.listen(PORT, HOST, () => {
-  console.log(`🚀 9Router Tools server đang chạy tại http://${HOST}:${PORT}`);
-  console.log(`📂 Data directory: ${DATA_DIR}`);
-  console.log(`📄 State file: ${STATE_FILE}`);
+  console.log(`[Server] 9Router Tools server dang chay tai http://${HOST}:${PORT}`);
+  console.log(`[Server] Data directory: ${DATA_DIR}`);
+  console.log(`[Server] State file: ${STATE_FILE}`);
 });

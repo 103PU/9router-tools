@@ -78,6 +78,9 @@
         <div class="profile-bar-info">
           <span class="profile-bar-name" id="profileBarName">—</span>
           <span class="profile-bar-path" id="profileBarPath">—</span>
+          <button class="btn-edit-path" id="btnHeaderEditPath" title="Đổi đường dẫn cấu hình" style="background: transparent; border: none; color: var(--text-secondary); cursor: pointer; padding: 2px; margin-left: 6px; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </button>
         </div>
         <div style="display: flex; align-items: center; gap: 12px;">
           <button class="btn-icon-panel" id="btnCopyProfilePath" title="Sao chép đường dẫn file cấu hình">
@@ -85,6 +88,12 @@
               <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
             </svg>
             <span>Copy Path</span>
+          </button>
+          <button class="btn-icon-panel" id="btnOpenProfileFolder" title="Mở thư mục chứa file cấu hình">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+            </svg>
+            <span>Open Folder</span>
           </button>
           <button class="btn-icon-panel" id="btnExportProfileData" title="Xuất dữ liệu cấu hình hiện tại (JSON/CSV)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -202,10 +211,10 @@
             <thead>
               <tr>
                 <th style="width: 40px; text-align: center;"><input type="checkbox" id="selectAllAccountsCheckbox" checked></th>
-                <th>Tài khoản (Name)</th>
+                <th style="cursor: pointer; user-select: none;" id="thAccountName" data-sort="name">Tài khoản (Name) <span id="sortIconName"></span></th>
                 <th>Provider</th>
-                <th>Độ ưu tiên</th>
-                <th>Trạng thái / Ping</th>
+                <th style="cursor: pointer; user-select: none; width: 120px;" id="thPriority" data-sort="priority">Độ ưu tiên <span id="sortIconPriority"></span></th>
+                <th style="cursor: pointer; user-select: none;" id="thStatus" data-sort="status">Trạng thái <span id="sortIconStatus"></span></th>
                 <th>Hành động</th>
               </tr>
             </thead>

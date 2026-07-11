@@ -10,6 +10,8 @@ var baseConfig = null;     // Tải từ profile rootPath qua API
 var importConfig = null;   // Từ file kéo thả
 var mergedConfig = null;
 var accountsList = [];
+var currentSortField = 'name';
+var currentSortDirection = 'asc';
 var settings = { retentionCount: 20, confirmBeforeWrite: true, serverPort: 3000, themeAccentColor: 'cyan' };
 
 // ═══ DOM CACHE ═══
@@ -43,6 +45,8 @@ function cacheDOM() {
   DOM.profileHealthText = document.getElementById('profileHealthText');
   DOM.btnCheckHealth = document.getElementById('btnCheckHealth');
   DOM.btnCopyProfilePath = document.getElementById('btnCopyProfilePath');
+  DOM.btnOpenProfileFolder = document.getElementById('btnOpenProfileFolder');
+  DOM.btnHeaderEditPath = document.getElementById('btnHeaderEditPath');
   DOM.btnExportProfileData = document.getElementById('btnExportProfileData');
 
   DOM.emptyNoProfile = document.getElementById('emptyStateNoProfile');
@@ -172,6 +176,29 @@ function setupEventListeners() {
     }
   });
 
+  DOM.btnOpenProfileFolder.addEventListener('click', async function () {
+    if (activeProfile) {
+      try {
+        var res = await fetch('/api/system/open-folder?path=' + encodeURIComponent(activeProfile.rootPath));
+        if (res.ok) {
+          showToast('Đã mở thư mục chứa file cấu hình!', 'success');
+          log('Mở thư mục chứa file cấu hình của profile "' + activeProfile.name + '".', 'info');
+        } else {
+          var errData = await res.json();
+          showToast('Lỗi mở thư mục: ' + errData.error, 'error');
+        }
+      } catch (e) {
+        showToast('Lỗi kết nối server!', 'error');
+      }
+    }
+  });
+
+  DOM.btnHeaderEditPath.addEventListener('click', function () {
+    if (activeProfile) {
+      showEditProfileModal(activeProfile.id);
+    }
+  });
+
   DOM.btnExportProfileData.addEventListener('click', function () {
     if (baseConfig && activeProfile) {
       var blob = new Blob([JSON.stringify(baseConfig, null, 2)], { type: 'application/json' });
@@ -215,6 +242,16 @@ function setupEventListeners() {
   DOM.tabBtnHistory.addEventListener('click', function () {
     switchTab('history');
   });
+
+  // Table header sorting listeners
+  var thName = document.getElementById('thAccountName');
+  if (thName) thName.addEventListener('click', function () { handleHeaderSort('name'); });
+
+  var thPriority = document.getElementById('thPriority');
+  if (thPriority) thPriority.addEventListener('click', function () { handleHeaderSort('priority'); });
+
+  var thStatus = document.getElementById('thStatus');
+  if (thStatus) thStatus.addEventListener('click', function () { handleHeaderSort('status'); });
 }
 
 
@@ -486,7 +523,15 @@ function renderProfileCard(profile) {
     '<div class="profile-card-t3">' +
       '<span class="chip-item">' + backupCountText + '</span>' +
       '<span class="chip-item">' + (lastWriteSummary ? 'Đã ghi' : 'Sẵn sàng') + '</span>' +
-      '<span class="pill-status ' + healthStatusClass + '">' + (profile.healthy === true ? 'Healthy' : 'Broken') + '</span>' +
+      '<span class="pill-status ' + healthStatusClass + '">' +
+        (profile.healthy === true
+          ? '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:10px; height:10px; margin-right:4px; vertical-align: middle;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Healthy'
+          : (profile.healthy === false
+              ? '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:10px; height:10px; margin-right:4px; vertical-align: middle;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Broken'
+              : '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:10px; height:10px; margin-right:4px; vertical-align: middle;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Unknown'
+            )
+        ) +
+      '</span>' +
     '</div>' +
     '<div class="profile-card-hover-actions">' +
       '<button class="btn-more" title="Tác vụ khác">⋮</button>' +
@@ -838,6 +883,24 @@ function renderAccountCards() {
     return acc.status === currentFilter;
   });
 
+  // Sắp xếp danh sách
+  filteredList.sort(function (a, b) {
+    var valA = a[currentSortField];
+    var valB = b[currentSortField];
+    
+    if (typeof valA === 'string') {
+      valA = valA.toLowerCase();
+      valB = valB.toLowerCase();
+    }
+    
+    if (valA < valB) return currentSortDirection === 'asc' ? -1 : 1;
+    if (valA > valB) return currentSortDirection === 'asc' ? 1 : -1;
+    return 0;
+  });
+
+  // Vẽ sort icon tương ứng
+  updateSortHeadersUI();
+
   if (filteredList.length === 0) {
     DOM.accountsTableBody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-secondary); padding: 20px;">Không có tài khoản nào khớp bộ lọc</td></tr>';
     return;
@@ -863,11 +926,11 @@ function renderAccountCards() {
 
     var statusBadgeHTML = '';
     if (acc.status === 'new') {
-      statusBadgeHTML = '<span class="acc-badge new">Mới</span>';
+      statusBadgeHTML = '<span class="acc-badge new"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:10px; height:10px; margin-right:4px; vertical-align: middle;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Mới</span>';
     } else if (acc.status === 'update') {
-      statusBadgeHTML = '<span class="acc-badge update">Cập nhật</span>';
+      statusBadgeHTML = '<span class="acc-badge update"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:10px; height:10px; margin-right:4px; vertical-align: middle;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>Cập nhật</span>';
     } else {
-      statusBadgeHTML = '<span class="acc-badge warning">Cảnh báo</span>';
+      statusBadgeHTML = '<span class="acc-badge warning"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:10px; height:10px; margin-right:4px; vertical-align: middle;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Cảnh báo</span>';
     }
 
     var pingHTML = acc.ping ? '<span class="ping-status">' + acc.ping + '</span>' : '<span class="ping-status" style="color: var(--text-secondary);">—</span>';
@@ -971,6 +1034,33 @@ function renderAccountCards() {
   });
 
   updateHeaderCheckboxState();
+}
+
+function updateSortHeadersUI() {
+  var fields = ['Name', 'Priority', 'Status'];
+  fields.forEach(function (f) {
+    var span = document.getElementById('sortIcon' + f);
+    if (span) span.innerHTML = '';
+  });
+
+  var activeSpanId = 'sortIcon' + currentSortField.charAt(0).toUpperCase() + currentSortField.slice(1);
+  var activeSpan = document.getElementById(activeSpanId);
+  if (activeSpan) {
+    var arrowIcon = currentSortDirection === 'asc'
+      ? '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:10px; height:10px; margin-left:4px; vertical-align: middle;"><polyline points="18 15 12 9 6 15"/></svg>'
+      : '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:10px; height:10px; margin-left:4px; vertical-align: middle;"><polyline points="6 9 12 15 18 9"/></svg>';
+    activeSpan.innerHTML = arrowIcon;
+  }
+}
+
+function handleHeaderSort(field) {
+  if (currentSortField === field) {
+    currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
+  } else {
+    currentSortField = field;
+    currentSortDirection = 'asc';
+  }
+  renderAccountCards();
 }
 
 function updateHeaderCheckboxState() {
@@ -2078,7 +2168,7 @@ function setupKeyboardShortcuts() {
       if (!DOM.modalOverlay.classList.contains('hidden')) {
         hideModal();
       }
-      document.querySelectorAll('.profile-card-dropdown.active').forEach(function (d) {
+      document.querySelectorAll('.profile-card-dropdown.active, .row-actions-dropdown.active').forEach(function (d) {
         d.classList.remove('active');
       });
     }
